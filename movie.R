@@ -11,13 +11,6 @@ library(cowplot)
 
 na_strings <- c("$", ",")
 
-# movies <- read_delim("data/movies.csv", delim = ";", 
-#                      escape_double = FALSE, trim_ws = TRUE, 
-#                      skip = 1) %>% 
-#   select(Rank, Title, Gross =  `Lifetime Gross`, Year) %>% 
-#   mutate(Gross_num = as.numeric(gsub("[[:punct:]]", "", Gross)),
-#          Title = fct_reorder(Title, Year))
-
 movies <- read_delim("data/movies.csv", delim = ";", 
                      escape_double = FALSE, trim_ws = TRUE, 
                      skip = 1) %>% 
@@ -35,10 +28,8 @@ Year_missing
 
 add_tibble <- tibble(
   Rank = rep(NA, length(Year_missing)), 
-  #Title = rep("...", length(Year_missing)), 
   Title = as.character(1:length(Year_missing)),
   Year = Year_missing, 
-  #Gross_num = as.numeric(paste0(rep("0.", length(Year_missing)),  1:length(Year_missing)))
   Gross_num = rep(-4000000000, length(Year_missing))
 )
 
@@ -84,7 +75,6 @@ p <- ggplot(movies2, aes(Gross_num, Title)) +
     plot.margin = margin(0.75, 0.3, 0.5, 0.25, "cm"),
     plot.title = element_text(size = 18,
                               hjust = -0.11,
-                              #family=font3, 
                               face = "bold",
                               color="#ffffff"),
     plot.subtitle = element_text(size = 14,
@@ -103,10 +93,7 @@ p <- ggplot(movies2, aes(Gross_num, Title)) +
                                hjust = 1,
                                vjust = 0.5,
                                angle = 90,
-                               #family=font2, 
-                               color=my_color
-                               #color="#ffffff"
-                               ),
+                               color=my_color),
       axis.text.y = element_text(size = 8,
                                  color="#ffffff")) 
   
